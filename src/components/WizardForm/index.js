@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Row, Col, FormGroup, Label } from 'reactstrap';
-import { Form, Input } from '@rocketseat/unform';
+import React, { useState, useMemo } from 'react';
 import CharacterSheet from '../CharacterSheet';
 import Skill from '../Skill';
 

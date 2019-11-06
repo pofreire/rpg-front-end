@@ -37,7 +37,6 @@ export default function Dashboard() {
   async function handleRemoverCharacter(character) {
     const willDelete = await swal({
       title: 'Do you want to delete this character?',
-      text: '!',
       icon: 'warning',
       buttons: true,
       dangerMode: true,
@@ -55,7 +54,7 @@ export default function Dashboard() {
       <Table responsive>
         <thead>
           <tr>
-            <th>#</th>
+            <th>Level</th>
             <th>Name</th>
             <th>Life</th>
             <th>Strength</th>
@@ -70,7 +69,7 @@ export default function Dashboard() {
         <tbody>
           {characters.map(character => (
             <tr key={character.id}>
-              <td>{character.id}</td>
+              <td>{character.level}</td>
               <td>{character.name}</td>
               <td>{character.life}</td>
               <td>{character.strength}</td>
