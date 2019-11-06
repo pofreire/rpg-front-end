@@ -21,8 +21,9 @@ export default createGlobalStyle`
     height: 100%;
   }
 
-  body: {
+  body {
     -webkit-font-smoothing: antialiased;
+    background: #282a36;
   }
 
   body, input, button{
@@ -39,5 +40,10 @@ export default createGlobalStyle`
 
   button{
     cursor: pointer;
+  }
+
+  td, th{
+    color: #fff;
+    text-align: center;
   }
 `;

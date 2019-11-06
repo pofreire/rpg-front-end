@@ -15,9 +15,6 @@ export default function EditarCharacter({ match: { params } }) {
 
         setCharacter({
           ...data,
-          docente: data.docente.id,
-          disciplina: data.disciplina.id,
-          curso: data.curso.id,
         });
       }
       /*  const resposeSkills = await api.get(`skills`);

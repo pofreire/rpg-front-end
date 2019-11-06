@@ -6,5 +6,11 @@ module.exports = override(
     {
       rootPathSuffix: 'src',
     },
+  ]),
+  addBabelPlugin([
+    'babel-plugin-styled-components',
+    {
+      displayName: false,
+    },
   ])
 );

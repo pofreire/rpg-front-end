@@ -1,13 +1,29 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-
 import api from '~/services/api';
+
+import { Table, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilAlt, faTrash } from '@fortawesome/pro-duotone-svg-icons';
+import swal from 'sweetalert';
+import Header from '~/components/Header';
+import WizardForm from '~/components/WizardForm';
 
 import { Container } from './styles';
 
 export default function Dashboard() {
   const [characters, setCharacters] = useState([]);
+  const [character, setCharacter] = useState([]);
+  const [modal, setModal] = useState(false);
+  const toggle = char => {
+    setModal(!modal);
+    if (char) {
+      console.log(char);
+      setCharacter(char);
+    } else {
+      setCharacter(undefined);
+    }
+  };
 
   useEffect(() => {
     async function loadData() {
@@ -18,20 +34,37 @@ export default function Dashboard() {
     loadData();
   }, []);
 
+  async function handleRemoverCharacter(character) {
+    const willDelete = await swal({
+      title: 'Do you want to delete this character?',
+      text: '!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    });
+    if (willDelete) {
+      await api.delete(`characters/${character.id}`);
+      setCharacters(characters.filter(c => c.id !== character.id));
+    }
+  }
+
   return (
     <Container>
-      <table>
+      <Header>adasd</Header>
+
+      <Table responsive>
         <thead>
           <tr>
             <th>#</th>
-            <th>name</th>
-            <th>life</th>
-            <th>strength</th>
-            <th>dexterity</th>
-            <th>constitution</th>
-            <th>intelligence</th>
-            <th>wisdom</th>
-            <th>charisma</th>
+            <th>Name</th>
+            <th>Life</th>
+            <th>Strength</th>
+            <th>Dexterity</th>
+            <th>Constitution</th>
+            <th>Intelligence</th>
+            <th>Wisdom</th>
+            <th>Charisma</th>
+            <th colSpan="2"> </th>
           </tr>
         </thead>
         <tbody>
@@ -47,13 +80,34 @@ export default function Dashboard() {
               <td>{character.wisdom}</td>
               <td>{character.charisma}</td>
               <td>
-                <Link to={`/characters/${character.id}`}>editar</Link>
+                <Button
+                  color="outline-light"
+                  size="sm"
+                  onClick={() => toggle(character)}
+                >
+                  <FontAwesomeIcon icon={faPencilAlt} />
+                </Button>
               </td>
-              <td>remover</td>
+              <td>
+                <Button
+                  color="outline-danger"
+                  size="sm"
+                  onClick={() => handleRemoverCharacter(character)}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </Button>
+              </td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
+
+      <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader toggle={toggle}>Edit character</ModalHeader>
+        <ModalBody>
+          <WizardForm character={character} />
+        </ModalBody>
+      </Modal>
     </Container>
   );
 }
