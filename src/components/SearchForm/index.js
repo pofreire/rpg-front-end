@@ -19,28 +19,19 @@ export default function SearchForm() {
     }
   }
 
-  function createCharacter() {
-    console.log('aaa');
-  }
-
   return (
-    <>
-      <Form onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label className="text-white">Pesquisar</Label>
-          <InputGroup className="form-search">
-            <Input name="name" className="form-control form-control-sm" />
-            <InputGroupAddon addonType="append">
-              <Button size="sm" color="outline-secondary">
-                Search
-              </Button>
-            </InputGroupAddon>
-          </InputGroup>
-        </FormGroup>
-      </Form>
-      <Button size="sm" color="outline-secondary" onClick={createCharacter}>
-        New Character
-      </Button>
-    </>
+    <Form onSubmit={handleSubmit}>
+      <FormGroup>
+        <Label className="text-white">Pesquisar</Label>
+        <InputGroup className="form-search">
+          <Input name="name" className="form-control form-control-sm" />
+          <InputGroupAddon addonType="append">
+            <Button size="sm" color="outline-secondary">
+              Search
+            </Button>
+          </InputGroupAddon>
+        </InputGroup>
+      </FormGroup>
+    </Form>
   );
 }

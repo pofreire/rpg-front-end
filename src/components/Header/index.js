@@ -10,7 +10,7 @@ export default function Header() {
       <Content>
         <nav>
           <img src={logo} alt="Dungeons and Dragons" />
-          <Link to="/characters">Dungeons and Dragons</Link>
+          <Link to="/">Dungeons and Dragons</Link>
         </nav>
       </Content>
     </Container>

@@ -80,14 +80,5 @@ export default createGlobalStyle`
     border-top: 1px solid;
     padding-top: 10px;
   }
-  .icon-rotate{
-    transform: rotate(180deg);
-    transition-duration: 1s;
-  }
-
-  .reset-rotate{
-    transform: rotate(0);
-    transition-duration: 1s;
-  }
 
 `;

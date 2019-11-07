@@ -1,7 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-
 import api from '~/services/api';
 
 import {
@@ -23,27 +22,26 @@ import {
   faHeart,
   faBrain,
   faHatWizard,
-  faChevronCircleUp,
+  faCommentSmile,
+  faEye,
+  faEyeSlash,
 } from '@fortawesome/pro-duotone-svg-icons';
 import swal from 'sweetalert';
 import Header from '~/components/Header';
 import SearchForm from '~/components/SearchForm';
 import WizardForm from '~/components/WizardForm';
-
 import { Container } from './styles';
 
 export default function Dashboard() {
   const [characters, setCharacters] = useState([]);
   const [character, setCharacter] = useState([]);
   const [toggleSkills, setToggleSkills] = useState([]);
-
   const { search } = useSelector(state => state.search);
-
   const [modal, setModal] = useState(false);
+
   const toggle = char => {
     setModal(!modal);
     if (char) {
-      console.log(char);
       setCharacter(char);
     } else {
       setCharacter(undefined);
@@ -54,14 +52,13 @@ export default function Dashboard() {
     setToggleSkills(toggleSkills.map((s, i) => (i === index ? !s : false)));
   };
 
-  useEffect(() => {
-    console.warn(search);
-    async function loadData() {
-      const response = await api.get(`characters?name=${search}`);
+  async function loadData() {
+    const response = await api.get(`characters?name=${search}`);
 
-      setCharacters(response.data);
-      setToggleSkills(response.data.map(() => false));
-    }
+    setCharacters(response.data);
+    setToggleSkills(response.data.map(() => false));
+  }
+  useEffect(() => {
     loadData();
   }, [search]);
 
@@ -81,7 +78,16 @@ export default function Dashboard() {
   return (
     <Container>
       <Header />
-      <SearchForm></SearchForm>
+      <Row className="align-items-center">
+        <Col>
+          <SearchForm></SearchForm>
+        </Col>
+        <Col className="text-right">
+          <Button size="sm" color="outline-secondary" onClick={toggle}>
+            + New Character
+          </Button>
+        </Col>
+      </Row>
       <Table responsive>
         <thead>
           <tr>
@@ -102,13 +108,14 @@ export default function Dashboard() {
           {characters.map((character, index) => (
             <>
               <tr key={character.id}>
-                <td
-                  onClick={() => toggleSkill(index)}
-                  className={
-                    toggleSkills[index] ? 'icon-rotate' : 'reset-rotate'
-                  }
-                >
-                  <FontAwesomeIcon icon={faChevronCircleUp} size="lg" />
+                <td onClick={() => toggleSkill(index)}>
+                  <Button color="outline-light" size="sm">
+                    {toggleSkills[index] ? (
+                      <FontAwesomeIcon icon={faEyeSlash} />
+                    ) : (
+                      <FontAwesomeIcon icon={faEye} />
+                    )}
+                  </Button>
                 </td>
                 <td>{character.level}</td>
                 <td>{character.name}</td>
@@ -145,19 +152,19 @@ export default function Dashboard() {
               >
                 <td colSpan="12" style={{ overflow: 'hidden' }}>
                   {character.skills.map(skill => (
-                    <Media key={skill}>
+                    <Media key={skill.id}>
                       {skill.ability === 'strength' ? (
-                        <FontAwesomeIcon icon={faFistRaised} size="3x" />
+                        <FontAwesomeIcon icon={faFistRaised} size="2x" />
                       ) : skill.ability === 'dexterity' ? (
-                        <FontAwesomeIcon icon={faRunning} size="3x" />
+                        <FontAwesomeIcon icon={faRunning} size="2x" />
                       ) : skill.ability === 'constitution' ? (
-                        <FontAwesomeIcon icon={faHeart} size="3x" />
+                        <FontAwesomeIcon icon={faHeart} size="2x" />
                       ) : skill.ability === 'intelligence' ? (
-                        <FontAwesomeIcon icon={faBrain} size="3x" />
+                        <FontAwesomeIcon icon={faBrain} size="2x" />
                       ) : skill.ability === 'wisdom' ? (
-                        <FontAwesomeIcon icon={faHatWizard} size="3x" />
+                        <FontAwesomeIcon icon={faHatWizard} size="2x" />
                       ) : skill.ability === 'charisma' ? (
-                        <FontAwesomeIcon icon={faPencilAlt} size="3x" />
+                        <FontAwesomeIcon icon={faCommentSmile} size="2x" />
                       ) : (
                         ''
                       )}
@@ -172,8 +179,7 @@ export default function Dashboard() {
                               ? 'Proficient'
                               : 'Non-Proficient'}
                           </Col>
-
-                          <Col>score: 345</Col>
+                          <Col>score: 09</Col>
                         </Row>
                       </Media>
                     </Media>
@@ -186,9 +192,15 @@ export default function Dashboard() {
       </Table>
 
       <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Edit character</ModalHeader>
+        <ModalHeader toggle={toggle}>
+          {!character ? 'Create' : 'Edit'} character
+        </ModalHeader>
         <ModalBody>
-          <WizardForm character={character} />
+          <WizardForm
+            character={character}
+            loadData={loadData}
+            toggle={toggle}
+          />
         </ModalBody>
       </Modal>
     </Container>

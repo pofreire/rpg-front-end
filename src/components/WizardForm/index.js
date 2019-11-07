@@ -1,17 +1,15 @@
 import React, { useState, useMemo } from 'react';
 import CharacterSheet from '../CharacterSheet';
 import Skill from '../Skill';
+import { Button, Col, Row } from 'reactstrap';
 
-export default function WizardForm({ character }) {
+export default function WizardForm({ character, loadData, toggle, modal }) {
   const [currentStep, setCurrentStep] = useState(1);
   const finalStep = useMemo(
     () =>
       character && character.skills ? character.skills.length + 1 : currentStep,
     [character]
   );
-  if (!character) {
-    return <div>...</div>;
-  }
   const steps = [, 'Character sheet', 'Skills'];
 
   function _next() {
@@ -53,8 +51,23 @@ export default function WizardForm({ character }) {
 
   return (
     <>
-      <p>{steps[currentStep]} </p>
-      {currentStep === 1 && <CharacterSheet character={character} />}
+      <Row className="align-baseline-center">
+        <Col>
+          <p>{steps[currentStep]} </p>
+        </Col>
+        <Col className="text-right">
+          <Button color="outline-secondary" size="sm">
+            + Add skill
+          </Button>
+        </Col>
+      </Row>
+      {currentStep === 1 && (
+        <CharacterSheet
+          character={character}
+          loadData={loadData}
+          toggle={toggle}
+        />
+      )}
 
       {currentStep > 1 &&
         character &&

@@ -1,10 +1,33 @@
-import React from 'react';
-import { Row, Col, FormGroup, Label } from 'reactstrap';
+import React, { useState } from 'react';
+import { Button, Row, Col, FormGroup, Label } from 'reactstrap';
 import { Form, Input } from '@rocketseat/unform';
+import { faCheck } from '@fortawesome/pro-duotone-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as Yup from 'yup';
 
-export default function CharacterSheet({ character }) {
+import api from '~/services/api';
+
+export default function CharacterSheet({ character, loadData, toggle }) {
+  function handleSubmit(data) {
+    character = { ...data };
+    api.post(`/characters`, character);
+
+    loadData();
+    toggle();
+  }
+
+  const schema = Yup.object().shape({
+    name: Yup.string().required(),
+    strength: Yup.string().required(),
+    dexterity: Yup.string().required(),
+    constitution: Yup.string().required(),
+    intelligence: Yup.string().required(),
+    wisdom: Yup.string().required(),
+    charisma: Yup.string().required(),
+  });
+
   return (
-    <Form initialData={character}>
+    <Form schema={schema} initialData={character} onSubmit={handleSubmit}>
       <FormGroup>
         <Label>Name</Label>
         <Input name="name" className="form-control form-control-sm" />
@@ -72,6 +95,13 @@ export default function CharacterSheet({ character }) {
               className="form-control form-control-sm"
             />
           </FormGroup>
+        </Col>
+      </Row>
+      <Row>
+        <Col className="text-right">
+          <Button color="outline-secondary" size="sm" type="submit">
+            <FontAwesomeIcon icon={faCheck} /> Save
+          </Button>
         </Col>
       </Row>
     </Form>
