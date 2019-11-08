@@ -93,6 +93,7 @@ export default function Dashboard() {
           <tr>
             <th>#</th>
             <th>Level</th>
+            <th>Proficient</th>
             <th>Name</th>
             <th>Life</th>
             <th>Strength</th>
@@ -118,6 +119,7 @@ export default function Dashboard() {
                   </Button>
                 </td>
                 <td>{character.level}</td>
+                <td>{character.proficient}</td>
                 <td>{character.name}</td>
                 <td>{character.life}</td>
                 <td>{character.strength}</td>

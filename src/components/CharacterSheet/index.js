@@ -18,12 +18,24 @@ export default function CharacterSheet({ character, loadData, toggle }) {
 
   const schema = Yup.object().shape({
     name: Yup.string().required(),
-    strength: Yup.string().required(),
-    dexterity: Yup.string().required(),
-    constitution: Yup.string().required(),
-    intelligence: Yup.string().required(),
-    wisdom: Yup.string().required(),
-    charisma: Yup.string().required(),
+    strength: Yup.number()
+      .min(1)
+      .max(20),
+    dexterity: Yup.number()
+      .min(1)
+      .max(20),
+    constitution: Yup.number()
+      .min(1)
+      .max(20),
+    intelligence: Yup.number()
+      .min(1)
+      .max(20),
+    wisdom: Yup.number()
+      .min(1)
+      .max(20),
+    charisma: Yup.number()
+      .min(1)
+      .max(20),
   });
 
   return (
