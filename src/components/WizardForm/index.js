@@ -20,9 +20,6 @@ export default function WizardForm({ character, loadData, toggle, modal }) {
     setCurrentStep(currentStep <= 1 ? 1 : currentStep - 1);
   }
 
-  /*
-   * the functions for our button
-   */
   function previousButton() {
     if (currentStep !== 1) {
       return (
