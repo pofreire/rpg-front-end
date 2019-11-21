@@ -152,9 +152,9 @@ export default function Dashboard() {
                   toggleSkills[index] ? 'visible-skill' : 'hidden-skill'
                 }
               >
-                <td colSpan="12" style={{ overflow: 'hidden' }}>
+                <td colSpan="13" style={{ overflow: 'hidden' }}>
                   {character.skills.map(skill => (
-                    <Media key={skill.id}>
+                    <Media key={skill.id} className="pl-2">
                       {skill.ability === 'strength' ? (
                         <FontAwesomeIcon icon={faFistRaised} size="2x" />
                       ) : skill.ability === 'dexterity' ? (
@@ -181,7 +181,7 @@ export default function Dashboard() {
                               ? 'Proficient'
                               : 'Non-Proficient'}
                           </Col>
-                          <Col>score: 09</Col>
+                          <Col>Value: {skill.score}</Col>
                         </Row>
                       </Media>
                     </Media>
