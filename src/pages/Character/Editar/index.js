@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input } from '@rocketseat/unform';
+import { Input } from 'reactstrap';
+import { Form } from '@rocketseat/unform';
 
 import api from '~/services/api';
 
 export default function EditarCharacter({ match: { params } }) {
   const [character, setCharacter] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadData() {
+      setLoading(true);
+
       if (params.id) {
         const response = await api.get(`characters/${params.id}`);
 
@@ -26,6 +30,8 @@ export default function EditarCharacter({ match: { params } }) {
       ); */
     }
     loadData();
+
+    setLoading(false);
   }, []);
 
   async function handleSubmit() {
@@ -44,6 +50,7 @@ export default function EditarCharacter({ match: { params } }) {
     }
   }
 
+  if (loading) return <div>loading...</div>;
   return (
     <Form onSubmit={handleSubmit} initialData={character}>
       <Input name="ementa" />

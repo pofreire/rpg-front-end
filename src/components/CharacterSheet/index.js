@@ -9,6 +9,7 @@ import CustomInput from '~/components/CustomInput';
 import api from '~/services/api';
 
 export default function CharacterSheet({ character, loadData, toggle }) {
+  console.log(character);
   function handleSubmit(data) {
     character = { ...data };
     api.post(`/characters`, character);
@@ -46,12 +47,13 @@ export default function CharacterSheet({ character, loadData, toggle }) {
   });
 
   return (
-    <Form schema={schema} initialData={character} onSubmit={handleSubmit}>
-      <FormGroup>
-        <Label>Name</Label>
-        <CustomInput name="name" />
-      </FormGroup>
-      <Row>
+    <>
+      <Form initialData={character} onSubmit={handleSubmit}>
+        <FormGroup>
+          <Label>Name</Label>
+          <CustomInput name="name" />
+        </FormGroup>
+        {/* <Row>
         <Col>
           <FormGroup>
             <Label>Strength</Label>
@@ -91,14 +93,15 @@ export default function CharacterSheet({ character, loadData, toggle }) {
             <CustomInput name="charisma" type="number" />
           </FormGroup>
         </Col>
-      </Row>
-      <Row>
-        <Col className="text-right">
-          <Button color="outline-secondary" size="sm" type="submit">
-            <FontAwesomeIcon icon={faCheck} /> Save
-          </Button>
-        </Col>
-      </Row>
-    </Form>
+      </Row> */}
+        <Row>
+          <Col className="text-right">
+            <Button color="outline-secondary" size="sm" type="submit">
+              <FontAwesomeIcon icon={faCheck} /> Save
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+    </>
   );
 }
