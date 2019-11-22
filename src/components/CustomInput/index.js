@@ -3,9 +3,9 @@ import { Input } from 'reactstrap';
 import { useField } from '@rocketseat/unform';
 
 export default function CustomInput({ name, ...rest }) {
-  const [value, setValue] = useState();
   const ref = useRef();
   const { fieldName, registerField, defaultValue, error } = useField(name);
+  const [value, setValue] = useState(defaultValue);
 
   useEffect(() => {
     registerField({

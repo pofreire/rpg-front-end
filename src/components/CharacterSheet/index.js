@@ -9,10 +9,9 @@ import CustomInput from '~/components/CustomInput';
 import api from '~/services/api';
 
 export default function CharacterSheet({ character, loadData, toggle }) {
-  console.log(character);
   function handleSubmit(data) {
-    character = { ...data };
-    api.post(`/characters`, character);
+    data = { ...data };
+    api.post(`/characters`, data);
 
     loadData();
     toggle();
@@ -48,52 +47,52 @@ export default function CharacterSheet({ character, loadData, toggle }) {
 
   return (
     <>
-      <Form initialData={character} onSubmit={handleSubmit}>
+      <Form schema={schema} initialData={character} onSubmit={handleSubmit}>
         <FormGroup>
           <Label>Name</Label>
           <CustomInput name="name" />
         </FormGroup>
-        {/* <Row>
-        <Col>
-          <FormGroup>
-            <Label>Strength</Label>
-            <CustomInput name="strength" type="number" />
-          </FormGroup>
-        </Col>
-        <Col>
-          <FormGroup>
-            <Label>Dexterity</Label>
-            <CustomInput name="dexterity" type="number" />
-          </FormGroup>
-        </Col>
-        <Col>
-          <FormGroup>
-            <Label>Constitution</Label>
-            <CustomInput name="constitution" type="number" />
-          </FormGroup>
-        </Col>
-      </Row>
+        <Row>
+          <Col>
+            <FormGroup>
+              <Label>Strength</Label>
+              <CustomInput name="strength" type="number" />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label>Dexterity</Label>
+              <CustomInput name="dexterity" type="number" />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label>Constitution</Label>
+              <CustomInput name="constitution" type="number" />
+            </FormGroup>
+          </Col>
+        </Row>
 
-      <Row>
-        <Col>
-          <FormGroup>
-            <Label>Intelligence</Label>
-            <CustomInput name="intelligence" type="number" />
-          </FormGroup>
-        </Col>
-        <Col>
-          <FormGroup>
-            <Label>Wisdom</Label>
-            <CustomInput name="wisdom" type="number" />
-          </FormGroup>
-        </Col>
-        <Col>
-          <FormGroup size="sm">
-            <Label>Charisma</Label>
-            <CustomInput name="charisma" type="number" />
-          </FormGroup>
-        </Col>
-      </Row> */}
+        <Row>
+          <Col>
+            <FormGroup>
+              <Label>Intelligence</Label>
+              <CustomInput name="intelligence" type="number" />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label>Wisdom</Label>
+              <CustomInput name="wisdom" type="number" />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup size="sm">
+              <Label>Charisma</Label>
+              <CustomInput name="charisma" type="number" />
+            </FormGroup>
+          </Col>
+        </Row>
         <Row>
           <Col className="text-right">
             <Button color="outline-secondary" size="sm" type="submit">

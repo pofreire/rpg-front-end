@@ -55,6 +55,8 @@ export default function Dashboard() {
   async function loadData() {
     const response = await api.get(`characters?name=${search}`);
 
+    console.warn(search);
+
     setCharacters(response.data);
     setToggleSkills(response.data.map(() => false));
   }
@@ -153,6 +155,7 @@ export default function Dashboard() {
                 }
               >
                 <td colSpan="13" style={{ overflow: 'hidden' }}>
+                  {character.skills.length > 0 ? '' : <div>without skill</div>}
                   {character.skills.map(skill => (
                     <Media key={skill.id} className="pl-2">
                       {skill.ability === 'strength' ? (
