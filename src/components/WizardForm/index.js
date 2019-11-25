@@ -53,6 +53,10 @@ export default function WizardForm({ character, loadData, toggle, modal }) {
     return null;
   }
 
+  function handleClick() {
+    console.error('aaaaaa');
+  }
+
   return (
     <>
       <Row className="align-baseline-center">
@@ -60,7 +64,7 @@ export default function WizardForm({ character, loadData, toggle, modal }) {
           <p>{steps[currentStep]} </p>
         </Col>
         <Col className="text-right">
-          <Button color="outline-secondary" size="sm">
+          <Button color="outline-secondary" size="sm" onClick={handleClick}>
             + Add skill
           </Button>
         </Col>
@@ -73,12 +77,13 @@ export default function WizardForm({ character, loadData, toggle, modal }) {
         />
       )}
 
-      {currentStep > 1 &&
-        character &&
-        character.skills &&
-        character.skills.map(skill => (
-          <Skill key={skill.id} skill={skill} currentStep={currentStep} />
-        ))}
+      {currentStep > 1 && character && character.skills && (
+        <Skill
+          skill={character.skills[currentStep]}
+          currentStep={currentStep}
+          character={character}
+        />
+      )}
       {previousButton()}
       {nextButton()}
     </>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Row, Col, FormGroup, Label } from 'reactstrap';
-import { Form, Input } from '@rocketseat/unform';
+import { Form } from '@rocketseat/unform';
 import { faCheck } from '@fortawesome/pro-duotone-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Yup from 'yup';
@@ -11,21 +11,14 @@ import api from '~/services/api';
 export default function CharacterSheet({ character, loadData, toggle }) {
   const [currentStep, setCurrentStep] = useState(1);
 
-  function handleSubmit(data) {
-    data = { ...data };
-    api.post(`/characters`, data);
-
-    loadData();
-    toggle();
-  }
-
-  function updateCharacter(data) {
-    data = { ...data };
-    console.info(data);
-    api.patch(`/characters/${data.id}`);
-
-    loadData();
-    toggle();
+  async function handleSubmit(data) {
+    if (!character) {
+      await api.post(`/characters`, data);
+    } else {
+      await api.patch(`/characters/${character.id}`, data);
+    }
+    await loadData();
+    await toggle();
   }
 
   const schema = Yup.object().shape({
@@ -61,10 +54,9 @@ export default function CharacterSheet({ character, loadData, toggle }) {
       <Form
         schema={schema}
         initialData={character}
-        onSubmit={character.id != null ? updateCharacter : handleSubmit}
+        onSubmit={handleSubmit}
         step={currentStep}
       >
-        <Input name="id" />
         <FormGroup>
           <Label>Name</Label>
           <CustomInput name="name" />

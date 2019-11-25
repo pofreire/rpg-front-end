@@ -25,6 +25,7 @@ import {
   faCommentSmile,
   faEye,
   faEyeSlash,
+  faTimes,
 } from '@fortawesome/pro-duotone-svg-icons';
 import swal from 'sweetalert';
 import Header from '~/components/Header';
@@ -34,6 +35,8 @@ import { Container } from './styles';
 
 export default function Dashboard() {
   const [characters, setCharacters] = useState([]);
+  const [skills, setSkills] = useState([]);
+
   const [character, setCharacter] = useState([]);
   const [toggleSkills, setToggleSkills] = useState([]);
   const { search } = useSelector(state => state.search);
@@ -55,8 +58,6 @@ export default function Dashboard() {
   async function loadData() {
     const response = await api.get(`characters?name=${search}`);
 
-    console.warn(search);
-
     setCharacters(response.data);
     setToggleSkills(response.data.map(() => false));
   }
@@ -74,6 +75,19 @@ export default function Dashboard() {
     if (willDelete) {
       await api.delete(`characters/${character.id}`);
       setCharacters(characters.filter(c => c.id !== character.id));
+    }
+  }
+
+  async function handleRemoverSkill(character, skill) {
+    const willDelete = await swal({
+      title: 'Do you want to delete this skill?',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    });
+    if (willDelete) {
+      await api.delete(`characters/${character.id}/skills/${skill.id}`);
+      setSkills(character.skills.filter(s => character.skills.id !== s.id));
     }
   }
 
@@ -187,6 +201,14 @@ export default function Dashboard() {
                           <Col>Value: {skill.score}</Col>
                         </Row>
                       </Media>
+
+                      <Button
+                        color="outline-danger"
+                        size="sm"
+                        onClick={() => handleRemoverSkill(character, skill)}
+                      >
+                        <FontAwesomeIcon icon={faTimes} />
+                      </Button>
                     </Media>
                   ))}
                 </td>
