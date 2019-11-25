@@ -8,9 +8,8 @@ export default function WizardForm({ character, loadData, toggle, modal }) {
   const finalStep = useMemo(
     () =>
       character && character.skills ? character.skills.length + 1 : currentStep,
-    [character]
+    [character, currentStep]
   );
-  const steps = [, 'Character sheet', 'Skills'];
 
   function _next() {
     setCurrentStep(currentStep >= finalStep ? finalStep - 1 : currentStep + 1);
@@ -54,20 +53,31 @@ export default function WizardForm({ character, loadData, toggle, modal }) {
   }
 
   function handleClick() {
-    console.error('aaaaaa');
+    if (!character.skills) {
+      character.skills = [];
+    }
+    character.skills.push({});
+    setCurrentStep(character.skills.length + 1);
+    return <Skill />;
   }
 
   return (
     <>
       <Row className="align-baseline-center">
         <Col>
-          <p>{steps[currentStep]} </p>
+          <p>
+            {currentStep === 1 ? 'Character sheet' : 'Skill'} {currentStep}
+          </p>
         </Col>
-        <Col className="text-right">
-          <Button color="outline-secondary" size="sm" onClick={handleClick}>
-            + Add skill
-          </Button>
-        </Col>
+        {character.id ? (
+          <Col className="text-right">
+            <Button color="outline-secondary" size="sm" onClick={handleClick}>
+              + Add skill
+            </Button>
+          </Col>
+        ) : (
+          ''
+        )}
       </Row>
       {currentStep === 1 && (
         <CharacterSheet
@@ -76,14 +86,20 @@ export default function WizardForm({ character, loadData, toggle, modal }) {
           toggle={toggle}
         />
       )}
+      {currentStep > 1 &&
+        character.skills &&
+        character.skills.map((skill, index) => {
+          if (index === currentStep - 2) {
+            return (
+              <Skill
+                skill={skill}
+                currentStep={currentStep}
+                character={character}
+              />
+            );
+          }
+        })}
 
-      {currentStep > 1 && character && character.skills && (
-        <Skill
-          skill={character.skills[currentStep]}
-          currentStep={currentStep}
-          character={character}
-        />
-      )}
       {previousButton()}
       {nextButton()}
     </>
