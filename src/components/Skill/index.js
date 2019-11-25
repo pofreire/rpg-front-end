@@ -5,7 +5,7 @@ import { faCheck } from '@fortawesome/pro-duotone-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import api from '~/services/api';
 
-export default function Skill({ character, loadData, skill }) {
+export default function Skill({ character, skill }) {
   async function handleSubmit(data) {
     const skills = { skill: { ...data, character_id: character.id } };
 
@@ -28,16 +28,16 @@ export default function Skill({ character, loadData, skill }) {
   return (
     <Form initialData={skill} onSubmit={handleSubmit}>
       <FormGroup>
+        <Label>Name</Label>
+        <Input name="name" className="form-control form-control-sm" />
+      </FormGroup>
+      <FormGroup>
         <Label>Ability</Label>
         <Select
           name="ability"
           className="form-control form-control-sm"
           options={abilities}
         />
-      </FormGroup>
-      <FormGroup>
-        <Label>Name</Label>
-        <Input name="name" className="form-control form-control-sm" />
       </FormGroup>
       <FormGroup>
         <Label>Proficient</Label>

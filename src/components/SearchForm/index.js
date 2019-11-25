@@ -14,9 +14,7 @@ export default function SearchForm() {
   const dispatch = useDispatch();
 
   function handleSubmit({ name }) {
-    if (name.length > 0) {
-      dispatch(searchRequest(name));
-    }
+    dispatch(searchRequest(name));
   }
 
   return (

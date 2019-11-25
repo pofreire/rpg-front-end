@@ -65,9 +65,8 @@ export default function WizardForm({ character, loadData, toggle, modal }) {
     <>
       <Row className="align-baseline-center">
         <Col>
-          <p>
-            {currentStep === 1 ? 'Character sheet' : 'Skill'} {currentStep}
-          </p>
+          {console.log(currentStep)}
+          <p>{currentStep === 1 ? 'Character sheet' : 'Skill'}</p>
         </Col>
         {character.id ? (
           <Col className="text-right">

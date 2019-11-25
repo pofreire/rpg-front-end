@@ -5,17 +5,19 @@ import { faCheck } from '@fortawesome/pro-duotone-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Yup from 'yup';
 import CustomInput from '~/components/CustomInput';
-
 import api from '~/services/api';
 
 export default function CharacterSheet({ character, loadData, toggle }) {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep] = useState(1);
 
   async function handleSubmit(data) {
-    if (!character) {
-      await api.post(`/characters`, data);
-    } else {
+    console.log('character', character.id);
+    if (character && character.id) {
       await api.patch(`/characters/${character.id}`, data);
+    } else {
+      data = { character: data };
+
+      await api.post(`/characters`, data);
     }
     await loadData();
     await toggle();

@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import api from '~/services/api';
-
 import {
   Table,
   Button,
@@ -35,8 +34,6 @@ import { Container } from './styles';
 
 export default function Dashboard() {
   const [characters, setCharacters] = useState([]);
-  const [skills, setSkills] = useState([]);
-
   const [character, setCharacter] = useState([]);
   const [toggleSkills, setToggleSkills] = useState([]);
   const { search } = useSelector(state => state.search);
@@ -44,10 +41,9 @@ export default function Dashboard() {
 
   const toggle = char => {
     setModal(!modal);
+    console.log('char ', char);
     if (char) {
       setCharacter(char);
-    } else {
-      setCharacter(undefined);
     }
   };
 
@@ -87,7 +83,7 @@ export default function Dashboard() {
     });
     if (willDelete) {
       await api.delete(`characters/${character.id}/skills/${skill.id}`);
-      setSkills(character.skills.filter(s => character.skills.id !== s.id));
+      loadData();
     }
   }
 
@@ -170,47 +166,49 @@ export default function Dashboard() {
               >
                 <td colSpan="13" style={{ overflow: 'hidden' }}>
                   {character.skills.length > 0 ? '' : <div>without skill</div>}
-                  {character.skills.map(skill => (
-                    <Media key={skill.id} className="pl-2">
-                      {skill.ability === 'strength' ? (
-                        <FontAwesomeIcon icon={faFistRaised} size="2x" />
-                      ) : skill.ability === 'dexterity' ? (
-                        <FontAwesomeIcon icon={faRunning} size="2x" />
-                      ) : skill.ability === 'constitution' ? (
-                        <FontAwesomeIcon icon={faHeart} size="2x" />
-                      ) : skill.ability === 'intelligence' ? (
-                        <FontAwesomeIcon icon={faBrain} size="2x" />
-                      ) : skill.ability === 'wisdom' ? (
-                        <FontAwesomeIcon icon={faHatWizard} size="2x" />
-                      ) : skill.ability === 'charisma' ? (
-                        <FontAwesomeIcon icon={faCommentSmile} size="2x" />
-                      ) : (
-                        ''
-                      )}
-                      <Media body>
-                        <Media heading>{skill.name}</Media>
-                        <Row>
-                          <Col>
-                            {skill.ability} <br />
-                          </Col>
-                          <Col>
-                            {skill.proficient === true
-                              ? 'Proficient'
-                              : 'Non-Proficient'}
-                          </Col>
-                          <Col>Value: {skill.score}</Col>
-                        </Row>
-                      </Media>
+                  {character.skills
+                    .sort((a, b) => (a.name > b.name ? 1 : -1))
+                    .map(skill => (
+                      <Media key={skill.id} className="pl-2">
+                        {skill.ability === 'strength' ? (
+                          <FontAwesomeIcon icon={faFistRaised} size="2x" />
+                        ) : skill.ability === 'dexterity' ? (
+                          <FontAwesomeIcon icon={faRunning} size="2x" />
+                        ) : skill.ability === 'constitution' ? (
+                          <FontAwesomeIcon icon={faHeart} size="2x" />
+                        ) : skill.ability === 'intelligence' ? (
+                          <FontAwesomeIcon icon={faBrain} size="2x" />
+                        ) : skill.ability === 'wisdom' ? (
+                          <FontAwesomeIcon icon={faHatWizard} size="2x" />
+                        ) : skill.ability === 'charisma' ? (
+                          <FontAwesomeIcon icon={faCommentSmile} size="2x" />
+                        ) : (
+                          ''
+                        )}
+                        <Media body>
+                          <Media heading>{skill.name}</Media>
+                          <Row>
+                            <Col>
+                              {skill.ability} <br />
+                            </Col>
+                            <Col>
+                              {skill.proficient === true
+                                ? 'Proficient'
+                                : 'Non-Proficient'}
+                            </Col>
+                            <Col>Value: {skill.score}</Col>
+                          </Row>
+                        </Media>
 
-                      <Button
-                        color="outline-danger"
-                        size="sm"
-                        onClick={() => handleRemoverSkill(character, skill)}
-                      >
-                        <FontAwesomeIcon icon={faTimes} />
-                      </Button>
-                    </Media>
-                  ))}
+                        <Button
+                          color="outline-danger"
+                          size="sm"
+                          onClick={() => handleRemoverSkill(character, skill)}
+                        >
+                          <FontAwesomeIcon icon={faTimes} />
+                        </Button>
+                      </Media>
+                    ))}
                 </td>
               </tr>
             </>
