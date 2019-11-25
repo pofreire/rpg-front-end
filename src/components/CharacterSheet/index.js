@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Row, Col, FormGroup, Label } from 'reactstrap';
-import { Form } from '@rocketseat/unform';
+import { Form, Input } from '@rocketseat/unform';
 import { faCheck } from '@fortawesome/pro-duotone-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Yup from 'yup';
@@ -9,9 +9,20 @@ import CustomInput from '~/components/CustomInput';
 import api from '~/services/api';
 
 export default function CharacterSheet({ character, loadData, toggle }) {
+  const [currentStep, setCurrentStep] = useState(1);
+
   function handleSubmit(data) {
     data = { ...data };
     api.post(`/characters`, data);
+
+    loadData();
+    toggle();
+  }
+
+  function updateCharacter(data) {
+    data = { ...data };
+    console.info(data);
+    api.patch(`/characters/${data.id}`);
 
     loadData();
     toggle();
@@ -47,7 +58,13 @@ export default function CharacterSheet({ character, loadData, toggle }) {
 
   return (
     <>
-      <Form schema={schema} initialData={character} onSubmit={handleSubmit}>
+      <Form
+        schema={schema}
+        initialData={character}
+        onSubmit={character.id != null ? updateCharacter : handleSubmit}
+        step={currentStep}
+      >
+        <Input name="id" />
         <FormGroup>
           <Label>Name</Label>
           <CustomInput name="name" />
@@ -72,7 +89,6 @@ export default function CharacterSheet({ character, loadData, toggle }) {
             </FormGroup>
           </Col>
         </Row>
-
         <Row>
           <Col>
             <FormGroup>

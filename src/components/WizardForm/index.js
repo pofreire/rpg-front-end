@@ -26,7 +26,11 @@ export default function WizardForm({ character, loadData, toggle, modal }) {
   function previousButton() {
     if (currentStep !== 1) {
       return (
-        <button className="btn btn-secondary" type="button" onClick={_prev}>
+        <button
+          className="btn btn-secondary btn-sm mt-1"
+          type="button"
+          onClick={_prev}
+        >
           Previous
         </button>
       );
@@ -38,7 +42,7 @@ export default function WizardForm({ character, loadData, toggle, modal }) {
     if (currentStep < finalStep) {
       return (
         <button
-          className="btn btn-primary float-right"
+          className="btn btn-primary float-right btn-sm mt-1"
           type="button"
           onClick={_next}
         >
@@ -75,7 +79,6 @@ export default function WizardForm({ character, loadData, toggle, modal }) {
         character.skills.map(skill => (
           <Skill key={skill.id} skill={skill} currentStep={currentStep} />
         ))}
-
       {previousButton()}
       {nextButton()}
     </>
