@@ -31,6 +31,7 @@ import Header from '~/components/Header';
 import SearchForm from '~/components/SearchForm';
 import WizardForm from '~/components/WizardForm';
 import { Container } from './styles';
+import Footer from '~/components/Footer';
 
 export default function Dashboard() {
   const [characters, setCharacters] = useState([]);
@@ -41,7 +42,6 @@ export default function Dashboard() {
 
   const toggle = char => {
     setModal(!modal);
-    console.log('char ', char);
     if (char) {
       setCharacter(char);
     }
@@ -228,6 +228,7 @@ export default function Dashboard() {
           />
         </ModalBody>
       </Modal>
+      <Footer />
     </Container>
   );
 }

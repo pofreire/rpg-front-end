@@ -1,11 +1,13 @@
 import React from 'react';
 import { Button, Row, Col, FormGroup, Label } from 'reactstrap';
-import { Form, Input, Check, Select } from '@rocketseat/unform';
+import { Form, Select } from '@rocketseat/unform';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Switcher from '~/components/Switcher';
 import api from '~/services/api';
+import CustomInput from '../CustomInput';
 
-export default function Skill({ character, skill }) {
+export default function Skill({ character, skill, loadData }) {
   async function handleSubmit(data) {
     const skills = { skill: { ...data, character_id: character.id } };
 
@@ -14,6 +16,7 @@ export default function Skill({ character, skill }) {
     } else {
       await api.post(`/characters/${character.id}/skills`, skills);
     }
+    loadData();
   }
 
   const abilities = [
@@ -29,19 +32,19 @@ export default function Skill({ character, skill }) {
     <Form initialData={skill} onSubmit={handleSubmit}>
       <FormGroup>
         <Label>Name</Label>
-        <Input name="name" className="form-control form-control-sm" />
+        <CustomInput name="name" />
       </FormGroup>
       <FormGroup>
         <Label>Ability</Label>
         <Select
           name="ability"
-          className="form-control form-control-sm"
           options={abilities}
+          className="form-control form-control-sm"
         />
       </FormGroup>
       <FormGroup>
         <Label>Proficient</Label>
-        <Check name="proficient" className="form-control form-control-sm" />
+        <Switcher name="proficient" />
       </FormGroup>
       <Row>
         <Col className="text-right">

@@ -11,7 +11,6 @@ export default function CharacterSheet({ character, loadData, toggle }) {
   const [currentStep] = useState(1);
 
   async function handleSubmit(data) {
-    console.log('character', character.id);
     if (character && character.id) {
       await api.patch(`/characters/${character.id}`, data);
     } else {

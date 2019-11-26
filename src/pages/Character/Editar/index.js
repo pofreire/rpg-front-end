@@ -25,7 +25,6 @@ export default function EditarCharacter({ match: { params } }) {
   }, []);
 
   async function handleSubmit(data) {
-    console.log(`params`, params);
     if (params.id) {
       await api.patch(`characters/${params.id}`, data);
     } else {

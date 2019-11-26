@@ -58,14 +58,19 @@ export default function WizardForm({ character, loadData, toggle, modal }) {
     }
     character.skills.push({});
     setCurrentStep(character.skills.length + 1);
-    return <Skill />;
+    return (
+      <Skill
+        loadData={loadData}
+        currentStep={currentStep}
+        character={character}
+      />
+    );
   }
 
   return (
     <>
       <Row className="align-baseline-center">
         <Col>
-          {console.log(currentStep)}
           <p>{currentStep === 1 ? 'Character sheet' : 'Skill'}</p>
         </Col>
         {character.id ? (
@@ -94,6 +99,7 @@ export default function WizardForm({ character, loadData, toggle, modal }) {
                 skill={skill}
                 currentStep={currentStep}
                 character={character}
+                loadData={loadData}
               />
             );
           }

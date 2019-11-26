@@ -1,7 +1,8 @@
 import axios from 'axios';
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3333/api/v1';
 
 const api = axios.create({
-  baseURL: 'https://dungeons-and-dragon-api.herokuapp.com/api/v1',
+  baseURL: apiUrl,
 });
 
 export default api;
