@@ -90,7 +90,7 @@ export default function Dashboard() {
   return (
     <Container>
       <Header />
-      <Row className="align-items-center">
+      <Row className="align-items-center search">
         <Col>
           <SearchForm></SearchForm>
         </Col>

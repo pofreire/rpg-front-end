@@ -72,6 +72,15 @@ export default createGlobalStyle`
     }
   }
 
+  @media only screen and (max-width: 992px) {
+    .form-search{
+      width: 100%;
+    }
+    .search{
+      flex-direction: column;
+    }
+  }
+
   .media{
     align-items: center;
   }
