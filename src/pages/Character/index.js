@@ -21,11 +21,11 @@ import {
   faHeart,
   faBrain,
   faHatWizard,
-  faCommentSmile,
+  faComment,
   faEye,
   faEyeSlash,
   faTimes,
-} from '@fortawesome/pro-duotone-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
 import swal from 'sweetalert';
 import Header from '~/components/Header';
 import SearchForm from '~/components/SearchForm';
@@ -181,7 +181,7 @@ export default function Dashboard() {
                         ) : skill.ability === 'wisdom' ? (
                           <FontAwesomeIcon icon={faHatWizard} size="2x" />
                         ) : skill.ability === 'charisma' ? (
-                          <FontAwesomeIcon icon={faCommentSmile} size="2x" />
+                          <FontAwesomeIcon icon={faComment} size="2x" />
                         ) : (
                           ''
                         )}

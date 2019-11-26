@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Row, Col, FormGroup, Label } from 'reactstrap';
 import { Form, Input, Check, Select } from '@rocketseat/unform';
-import { faCheck } from '@fortawesome/pro-duotone-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import api from '~/services/api';
 

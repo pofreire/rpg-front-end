@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Row, Col, FormGroup, Label } from 'reactstrap';
 import { Form } from '@rocketseat/unform';
-import { faCheck } from '@fortawesome/pro-duotone-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Yup from 'yup';
 import CustomInput from '~/components/CustomInput';
